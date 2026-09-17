@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prefa Scorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>Prefa Scorer</h1>
+          <p id="gameStatus">Loading game...</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="undoBtn" class="button secondary" type="button" disabled>Undo</button>
+          <button id="newGameBtn" class="button danger" type="button">New game</button>
+        </div>
+      </header>
+
+      <section class="scoreboard" aria-labelledby="scoresTitle">
+        <h2 id="scoresTitle" class="visually-hidden">Scores</h2>
+        <div id="scoreGrid" class="score-grid" aria-live="polite"></div>
+      </section>
+
+      <div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
+
+      <div class="workspace">
+        <section class="entry-panel" aria-labelledby="recordTitle">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Next hand</span>
+              <h2 id="recordTitle">Record result</h2>
+            </div>
+            <span id="contractValue" class="value-badge">Value 2</span>
+          </div>
+
+          <form id="contractForm">
+            <fieldset>
+              <legend><span>1</span> Bidding</legend>
+              <p class="field-help">Select the declarer below, then mark Ta grafo if they made that declaration.</p>
+              <label class="choice-chip ta-grafo-toggle">
+                <input id="taGrafoToggle" type="checkbox">
+                The selected declarer said Ta grafo
+              </label>
+              <div id="taGrafoOutcome" class="outcome-control hidden">
+                <span>Outcome</span>
+                <label>
+                  <input type="radio" name="taGrafoOutcome" value="play" checked>
+                  Play contract
+                </label>
+                <label>
+                  <input type="radio" name="taGrafoOutcome" value="decline">
+                  Decline (+2 kasa)
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset id="contractFieldset">
+              <legend><span>2</span> Contract</legend>
+              <div class="form-grid">
+                <label>
+                  Declarer
+                  <select id="declarer" required>
+                    <option value="">Select player</option>
+                  </select>
+                </label>
+                <label id="levelField">
+                  Level
+                  <select id="level" required>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                  </select>
+                </label>
+                <label id="suitField">
+                  Suit
+                  <select id="suit" required>
+                    <option value="spades">Spades</option>
+                    <option value="clubs">Clubs</option>
+                    <option value="diamonds">Diamonds</option>
+                    <option value="hearts">Hearts</option>
+                    <option value="no_trump">No Trump</option>
+                  </select>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset id="participationFieldset">
+              <legend><span>3</span> Participation</legend>
+              <div id="defendersContainer" class="defender-list">
+                <p class="empty-state">Select a declarer first.</p>
+              </div>
+            </fieldset>
+
+            <fieldset id="tricksFieldset">
+              <legend><span>4</span> Tricks</legend>
+              <div class="tricks-layout">
+                <label>
+                  <span id="declarerTricksLabel">Declarer tricks</span>
+                  <input id="declarerTricks" type="number" min="0" max="10" value="6" required>
+                </label>
+                <div id="trickCounter" class="trick-counter warning">
+                  <strong>6 / 10</strong>
+                  <span>4 tricks unassigned</span>
+                </div>
+              </div>
+            </fieldset>
+
+            <button id="recordBtn" class="button primary full-width" type="submit">Record hand</button>
+          </form>
+        </section>
+
+        <section class="history-panel" aria-labelledby="historyTitle">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Game log</span>
+              <h2 id="historyTitle">History</h2>
+            </div>
+            <span id="handCount" class="count-badge">0 hands</span>
+          </div>
+          <ol id="historyList" class="history-list"></ol>
+        </section>
+      </div>
+    </main>
+
+    <dialog id="newGameDialog">
+      <form id="newGameForm" method="dialog">
+        <div class="dialog-heading">
+          <h2>Start a new game?</h2>
+          <p>This clears the current scores and history.</p>
+        </div>
+        <label>Player 1 <input id="player1Name" type="text" value="Player 1" required maxlength="60"></label>
+        <label>Player 2 <input id="player2Name" type="text" value="Player 2" required maxlength="60"></label>
+        <label>Player 3 <input id="player3Name" type="text" value="Player 3" required maxlength="60"></label>
+        <label>Starting kasa <input id="startingKasa" type="number" value="20" min="1" max="999" required></label>
+        <div class="dialog-actions">
+          <button id="cancelGameBtn" class="button secondary" type="button">Cancel</button>
+          <button id="startGameBtn" class="button danger" type="submit">Clear and start</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

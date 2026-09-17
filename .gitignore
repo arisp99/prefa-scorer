@@ -1,0 +1,7 @@
+__pycache__/
+venv/
+instance/
+.webassets-cache
+prefa_game.json
+prefa_game.json.tmp
+
