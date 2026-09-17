@@ -4,16 +4,21 @@ A local scorer for the three-player Prefa.
 
 ## Running the Web App (Recommended)
 
-The app is now a modern web-based interface using Flask backend and HTML/CSS/JavaScript frontend:
+The app is now a modern web-based interface using Flask backend and
+HTML/CSS/JavaScript frontend. The app uses `gunicorn` as the production WSGI
+server and `Render` to host the site.
 
 ```bash
 # Set up virtual environment (first time only)
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 
-# Start the Flask server
+# Start the development Flask server
 python3 app.py
+
+# Start the production gunicorn server
+gunicorn app:app
 ```
 
 Then open **http://localhost:8000** in your browser.
